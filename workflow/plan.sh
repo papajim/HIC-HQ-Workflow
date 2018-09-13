@@ -15,7 +15,7 @@ DAXFILE=$1
 # in the "submit" directory. The execution # site is "".
 # --input-dir tells Pegasus where to find workflow input files.
 # --output-dir tells Pegasus where to place workflow output files.
-pegasus-plan -vvvvv --conf pegasus.properties \
+pegasus-plan --conf pegasus.properties \
     --dax $DAXFILE \
     --dir $DIR/submit \
     --sites condorpool \
