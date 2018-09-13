@@ -1,0 +1,26 @@
+cont hic_hq_image {
+	type "singularity"
+	#image "docker:///papajim/hic_hq:latest"
+    image_site "condorpool"
+	image "file://${PWD}/bin/hic_hq.simg"
+}
+
+tr run_wrapper {
+	site condorpool {
+		container "hic_hq_image"
+		pfn "file://${PWD}/bin/run_wrapper.sh"
+		arch "x86_64"
+		os "LINUX"
+		type "STAGEABLE"
+		#profile env "PATH" "/usr/local/hic_HQ-osg/bin:\$PATH"
+	}
+}
+
+tr run_events {
+	site condorpool {
+		pfn "file://${PWD}/bin/run-events_cD.py"
+		arch "x86_64"
+		os "LINUX"
+		type "STAGEABLE"
+	}
+}
