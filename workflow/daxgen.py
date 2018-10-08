@@ -25,19 +25,20 @@ events_exec = Executable("run_events")
 # replace XYZ with the unique identifier
 # and change the name of the input and args files
 # eg.
-# for XYZ in range(10): 
 
 args_conf = File("args.conf")
 results_in = File("Results.tar.gz")
-results_out = File("Results_XYZ.tar.gz")
 
-hic_job = Job("run_wrapper")
-hic_job.addArguments(args_conf, "XYZ")
-hic_job.uses(events_exec, link=Link.INPUT)
-hic_job.uses(args_conf, link=Link.INPUT)
-hic_job.uses(results_in, link=Link.INPUT)
-hic_job.uses(results_out, link=Link.OUTPUT, transfer=True, register=False)
-dax.addJob(hic_job)
+for i in range(10): 
+    results_out = File("Results_"+str(i)+".tar.gz")
+
+    hic_job = Job("run_wrapper")
+    hic_job.addArguments(args_conf, str(i))
+    hic_job.uses(events_exec, link=Link.INPUT)
+    hic_job.uses(args_conf, link=Link.INPUT)
+    hic_job.uses(results_in, link=Link.INPUT)
+    hic_job.uses(results_out, link=Link.OUTPUT, transfer=True, register=False)
+    dax.addJob(hic_job)
 
 # end of loop
 
