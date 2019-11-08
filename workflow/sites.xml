@@ -6,21 +6,29 @@
    <site handle="local" arch="x86_64" os="LINUX">
       <!-- This is where intermediate data will be stored -->
       <directory type="shared-scratch" path="${PWD}/scratch">
-         <file-server operation="all" url="file://${PWD}/scratch"/>
+         <file-server operation="all" url="scp://hic@master${PWD}/scratch"/>
       </directory>
       <!-- This is where output data will be stored -->
       <directory type="shared-storage" path="${PWD}/output">
-         <file-server operation="all" url="file://${PWD}/output"/>
+         <file-server operation="all" url="scp://hic@master${PWD}/output"/>
       </directory>
+      <profile namespace="pegasus" key="SSH_PRIVATE_KEY">/home/hic/.ssh/storage_rsa</profile>
    </site>
 
    <site handle="condorpool" arch="x86_64" os="LINUX">
+      <directory type="shared-scratch" path="${PWD}/scratch">
+         <file-server operation="all" url="scp://hic@master${PWD}/scratch"/>
+      </directory>
+
       <!-- These profiles tell Pegasus that the site is a plain Condor pool -->
       <profile namespace="pegasus" key="style">condor</profile>
-      <profile namespace="pegasus" key="data.configuration">condorio</profile>
+      <profile namespace="pegasus" key="data.configuration">nonsharedfs</profile>
       <profile namespace="condor" key="universe">vanilla</profile>
       <!--profile namespace="condor" key="+ProjectName">"Duke-QGP"</profile-->
       <!--profile namespace="condor" key="requirements">(OSGVO_OS_STRING == "RHEL 6" || OSGVO_OS_STRING == "RHEL 7") &amp;&amp; (CVMFS_oasis_opensciencegrid_org_REVISION >= 3467) &amp;&amp; (HAS_MODULES == True)</profile-->
+      <profile namespace="env" key="PEGASUS_TRANSFER_PUBLISH">1</profile>
+      <profile namespace="env" key="PEGASUS_AMQP_URL">amqp://panorama:panorama@128.194.6.143:5674/panorama/monitoring</profile>
+      <profile namespace="pegasus" key="SSH_PRIVATE_KEY">/home/hic/.ssh/storage_rsa</profile>
    </site>
 </sitecatalog>
 
